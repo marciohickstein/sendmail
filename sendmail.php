@@ -24,28 +24,29 @@ $subject = $_POST['assunto'];
 $text = $_POST['texto'];
 
 // Valida os dados obrigatorios que vieram do form
+$caption = "Erro";
 if (empty($host))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Servidor SMTP nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Servidor SMTP nao informado!");
 if (empty($port))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Porta do servidor de envio de email nao informada!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Porta do servidor de envio de email nao informada!");
 if (empty($userName))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Usuario para autenticacao com servidor de email nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Usuario para autenticacao com servidor de email nao informado!");
 if (empty($password))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Senha para autenticacao com servidor de email nao informada!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Senha para autenticacao com servidor de email nao informada!");
 if (empty($emailFrom))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Email do usuario de envio nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Email do usuario de envio nao informado!");
 if (empty($emailTo))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Email do destinatario nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Email do destinatario nao informado!");
 if (empty($subject))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Assunto do email nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Assunto do email nao informado!");
 if (empty($text))
-    showMessageFormatedAndAbort("Nao foi possivel enviar o email: Texto do email nao informado!");
+    messageBoxAndAbort($caption, "Nao foi possivel enviar o email: Texto do email nao informado!");
 
 // Tenta enviar o email usando PHPMailer
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
     //Server settings
-    //$mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = $host;                       // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -75,7 +76,7 @@ try {
     $mail->AltBody = $text;
 
     $mail->send();
-    showMessageFormated('Mensagem enviada com sucesso!');
+    messageBoxAndContinue('Aviso', 'Mensagem enviada com sucesso!');
 
     // Salva os dados de conexao com servidor SMTP no browser do usuario
     echo "<script src=\"localstorage.js\"></script>\n"; 
@@ -87,7 +88,7 @@ try {
     echo "</script>\n";
 
 } catch (Exception $e) {
-    showMessageFormated('Mensagem nao pode ser enviada. Erro do PHPMailer: ' . $mail->ErrorInfo);
+    messageBoxAndContinue('Erro', $mail->ErrorInfo);
 }
 
 ?>

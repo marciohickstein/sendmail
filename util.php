@@ -1,19 +1,20 @@
 <?php
-    function showMessageAndAbort($message, $abortExecution){
-        echo $message;
+    function messageBox($caption, $message, $abortExecution){
+        echo "<center>";
+        echo "<div>";
+        echo "<h2>$caption</h2><br>";
+        echo "<h1>$message</h1>";
+        echo "</div>";
+        echo "</center>";
         if ($abortExecution == true)
             exit;
     }
 
-    function showMessage($message){
-        showMessageAndAbort($message, false);
+    function messageBoxAndContinue($caption, $message){
+        messageBox($caption, $message, false);
     }
 
-    function showMessageFormatedAndAbort($message){
-        showMessageAndAbort("<center><h3>" . $message . "</h3></center>", true);
-    }
-
-    function showMessageFormated($message){
-        showMessageAndAbort("<center><h3>" . $message . "</h3></center>", false);
+    function messageBoxAndAbort($caption, $message){
+        messageBox($caption, $message, true);
     }
 ?>
