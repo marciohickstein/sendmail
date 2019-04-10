@@ -7,64 +7,67 @@
         <meta name="author" content="Marcio Hickstein">
         <title>Cliente de envio de email</title>
         <script src="localstorage.js"></script> 
-        <link rel="stylesheet" type="text/css" href="styles.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     </head>
     <body onload="readLocalStorage();">
-        <h1 align="center">Cliente de envio de email</h1>
-        <form action="sendmail.php" method="POST">
-        <fieldset>
-            <legend><b>Dados de conexão do servidor de email</b></legend>
+        <div class="container">
+                <h1><center><b>Cliente SMTP</b></center></h1>
+                <form action="sendmail.php" method="POST">
+            <fieldset class="border p-2">
+                <legend class="w-auto"><b>Dados de conexão com servidor de email</b></legend>
+                <div>
+                    <label for="host">Servidor SMTP:</label>
+                    <input class="form-control"  type="text" id="host" name="host"/>
+                </div>
+                <div>
+                    <label for="porta">Porta:</label>
+                    <input class="form-control" type="text" id="porta" name="porta"/>
+                </div>
+                <div>
+                    <label for="usuario">Login:</label>
+                    <input class="form-control" type="text" id="usuario" name="usuario"/>
+                </div>
+                <div>
+                    <label for="senha">Senha:</label>
+                    <input class="form-control" type="password" id="senha" name="senha"/>
+                </div>
+            </fieldset>
+            <fieldset class="border p-2">
+                <legend class="w-auto"><b>Dados da mensagem</b></legend>
+                <div></div>
+                <div>
+                    <label for="de">De:</label>
+                    <input class="form-control" type="email" id="de" name="de"/>
+                </div>
+                <div>
+                    <label for="para">Para:</label>
+                    <input class="form-control" type="email" id="para" name="para"/>
+                </div>
+                <div>
+                        <label for="cc">Cc:</label>
+                        <input class="form-control" type="email" id="cc" name="cc"/>
+                </div>
+                <div>
+                        <label for="cco">Cco:</label>
+                        <input class="form-control" type="email" id="cco" name="cco"/>
+                </div>
+                <div>
+                    <label for="assunto">Assunto:</label>
+                    <input class="form-control" type="text" id="assunto" name="assunto"/>
+                </div>
+                <div>
+                    <label for="texto">Mensagem:</label>
+                    <textarea class="form-control" id="texto" name="texto"></textarea>
+                </div>
+            </fieldset>
             <div></div>
-            <div>
-                <label for="host">Servidor SMTP:</label>
-                <input type="text" id="host" name="host"/>
+            <div class="btn btn-block">
+                <button class="btn btn-primary" type="submit">Enviar</button>
+                <button class="btn btn-danger" type="reset">Limpar</button>
             </div>
-            <div>
-                <label for="porta">Porta:</label>
-                <input type="text" id="porta" name="porta"/>
-            </div>
-            <div>
-                <label for="usuario">Login:</label>
-                <input type="text" id="usuario" name="usuario"/>
-            </div>
-            <div>
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha"/>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend><b>Dados da mensagem:</b></legend>
-            <div></div>
-            <div>
-                <label for="de">De:</label>
-                <input type="email" id="de" name="de"/>
-            </div>
-            <div>
-                <label for="para">Para:</label>
-                <input type="email" id="para" name="para"/>
-            </div>
-            <div>
-                    <label for="cc">Cc:</label>
-                    <input type="email" id="cc" name="cc"/>
-            </div>
-            <div>
-                    <label for="cco">Cco:</label>
-                    <input type="email" id="cco" name="cco"/>
-            </div>
-            <div>
-                <label for="assunto">Assunto:</label>
-                <input type="text" id="assunto" name="assunto"/>
-            </div>
-            <div>
-                <label for="texto">Mensagem:</label>
-                <textarea id="texto" name="texto"></textarea>
-            </div>
-        </fieldset>
-        <div></div>
-        <div class="button">
-            <button type="submit">Enviar</button>
-            <button type="reset">Limpar</button>
+            </form>
         </div>
-        </form>
-    </body>
+    </div>
+</body>
 <html>
