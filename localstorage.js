@@ -1,25 +1,19 @@
 
-function storageAvailable(){
+function localStorageAvailable(){
     return (typeof localStorage !== 'undefined');
 }
 
 function readLocalStorage(){
-    if (storageAvailable()){
-        var host, porta, usuario, senha;
-
-        host = localStorage.getItem("host");
-        porta = localStorage.getItem("porta");
-        usuario = localStorage.getItem("usuario");
-        senha = localStorage.getItem("senha");
-        document.getElementById("host").value = host;
-        document.getElementById("porta").value = porta;
-        document.getElementById("usuario").value = usuario;
-        document.getElementById("senha").value = senha;
+    if (localStorageAvailable()){
+        document.getElementById("host").value = localStorage.getItem("host");
+        document.getElementById("porta").value = localStorage.getItem("porta");
+        document.getElementById("usuario").value = localStorage.getItem("usuario");
+        document.getElementById("senha").value = localStorage.getItem("senha");
     }
 }
 
 function writeLocalStorage(key, value){
-    if (storageAvailable()){
+    if (localStorageAvailable()){
         localStorage.setItem(key, value);
     }
 }

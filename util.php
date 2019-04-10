@@ -20,9 +20,8 @@
     function messageBox($caption, $message){
         global $tpl;
         
-        $tpl->assign( "caption", $caption);
-        $tpl->assign( "text", $message);
+        $tpl->assign("caption", $caption);
+        $tpl->assign("text", $message);
         $tpl->draw("message");
     }
-
 ?>
