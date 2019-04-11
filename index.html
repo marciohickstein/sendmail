@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="sendmail">
     <head>
         <meta charset="UTF-8"> 
         <meta name="description" content="Send email from a web page">
         <meta name="keywords" content="Email,WEB,HTML,CSS,JavaScript,PHP">
         <meta name="author" content="Marcio Hickstein">
-        <title>Cliente de envio de email</title>
-        <script src="localstorage.js"></script> 
-        <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+        <title>{{nomeApp}}</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <script src="localstorage.js"></script> 
     </head>
-    <body onload="readLocalStorage();">
-        <div class="container">
-                <h1><center><b>Cliente SMTP</b></center></h1>
-                <form action="sendmail.php" method="POST">
+    <body ng-controller="sendmailCtrl">
+            <div class="container">
+        <h1 ng-bind="nomeApp" style="font-weight: bold ; text-align: center"></h1>
+        <form name="formSendmail" action="sendmail.php" method="POST">
             <fieldset class="border p-2">
                 <legend class="w-auto"><b>Dados de conexão com servidor de email</b></legend>
                 <div>
                     <label for="host">Servidor SMTP:</label>
-                    <input class="form-control"  type="text" id="host" name="host"/>
+                    <input class="form-control" type="text" id="host" name="host" ng-model="sendmail.host" required/>
                 </div>
                 <div>
                     <label for="porta">Porta:</label>
-                    <input class="form-control" type="text" id="porta" name="porta"/>
+                    <input class="form-control" type="text" id="porta" name="porta" ng-model="sendmail.porta" required/>
                 </div>
                 <div>
                     <label for="usuario">Login:</label>
-                    <input class="form-control" type="text" id="usuario" name="usuario"/>
+                    <input class="form-control" type="text" id="usuario" name="usuario" ng-model="sendmail.usuario" required/>
                 </div>
                 <div>
                     <label for="senha">Senha:</label>
-                    <input class="form-control" type="password" id="senha" name="senha"/>
+                    <input class="form-control" type="password" id="senha" name="senha" ng-model="sendmail.senha" required/>
                 </div>
             </fieldset>
             <fieldset class="border p-2">
@@ -38,36 +38,68 @@
                 <div></div>
                 <div>
                     <label for="de">De:</label>
-                    <input class="form-control" type="email" id="de" name="de"/>
+                    <input class="form-control" type="email" id="de" name="de" ng-model="sendmail.de" required/>
                 </div>
                 <div>
                     <label for="para">Para:</label>
-                    <input class="form-control" type="email" id="para" name="para"/>
+                    <input class="form-control" type="email" id="para" name="para" ng-model="sendmail.para" required/>
                 </div>
                 <div>
                         <label for="cc">Cc:</label>
-                        <input class="form-control" type="email" id="cc" name="cc"/>
+                        <input class="form-control" type="email" id="cc" name="cc" ng-model="sendmail.cc"/>
                 </div>
                 <div>
                         <label for="cco">Cco:</label>
-                        <input class="form-control" type="email" id="cco" name="cco"/>
+                        <input class="form-control" type="email" id="cco" name="cco" ng-model="sendmail.cco"/>
                 </div>
                 <div>
                     <label for="assunto">Assunto:</label>
-                    <input class="form-control" type="text" id="assunto" name="assunto"/>
+                    <input class="form-control" type="text" id="assunto" name="assunto" ng-model="sendmail.assunto" required/>
                 </div>
                 <div>
                     <label for="texto">Mensagem:</label>
-                    <textarea class="form-control" id="texto" name="texto"></textarea>
+                    <textarea class="form-control" id="texto" name="texto" ng-model="sendmail.texto" required></textarea>
                 </div>
             </fieldset>
             <div></div>
             <div class="btn btn-block">
                 <button class="btn btn-primary" type="submit">Enviar</button>
-                <button class="btn btn-danger" type="reset">Limpar</button>
+                <button class="btn btn-danger" type="reset" ng-click="resetForm()">Limpar</button>
             </div>
-            </form>
+        </form>
         </div>
     </div>
+    {{sendmail}}
+
 </body>
+<script src="lib/angular/angular.js"></script>
+<script>
+    angular.module("sendmail", []).controller("sendmailCtrl", function($scope){
+        $scope.nomeApp = "Cliente SMTP";
+
+        $scope.resetForm = function (){
+            $scope.formSendmail.$setPristine();
+            $scope.formSendmail.$setUntouched();
+            $scope.sendmail = {};
+        }
+        function localStorageAvailable(){
+            return (typeof localStorage !== 'undefined');
+        }
+
+        function readLocalStorage(){
+            if (localStorageAvailable()){
+                console.log("Read localstorage...")
+                $scope.sendmail = {};
+                $scope.sendmail.host = localStorage.getItem("host");
+                $scope.sendmail.porta = localStorage.getItem("porta");
+                $scope.sendmail.usuario = localStorage.getItem("usuario");
+                $scope.sendmail.senha = localStorage.getItem("senha");
+                console.log($scope.sendmail);
+                console.log("Finished!")
+            }
+        }
+
+        readLocalStorage();
+    });
+</script>
 <html>
