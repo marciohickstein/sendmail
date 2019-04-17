@@ -1,6 +1,9 @@
 <?php
     require_once("vendor/autoload.php");
 
+    const TYPE_MESSAGE_WARN  = "AVISO";
+    const TYPE_MESSAGE_ERROR = "ERRO";
+
     use Rain\Tpl;
 
     // config
@@ -17,11 +20,21 @@
     // create the Tpl object
     $tpl = new Tpl;
 
+    function messageAlert($message){
+        messageBox(TYPE_MESSAGE_WARN, $message);
+    }
+    
+    function messageError($message){
+        messageBox(TYPE_MESSAGE_ERROR, $message);
+    }
+
     function messageBox($caption, $message){
         global $tpl;
-        
+                
         $tpl->assign("caption", $caption);
         $tpl->assign("text", $message);
-        $tpl->draw("message");
+        $tpl->assign("alert", ($caption == TYPE_MESSAGE_ERROR) ? "alert-danger" : "alert-success");
+
+        $tpl->draw("result");
     }
 ?>

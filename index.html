@@ -6,94 +6,155 @@
         <meta name="keywords" content="Email,WEB,HTML,CSS,JavaScript,PHP">
         <meta name="author" content="Marcio Hickstein">
         <title>{{nomeApp}}</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <script src="localstorage.js"></script> 
     </head>
     <body ng-controller="sendmailCtrl">
-            <div class="container">
-        <h1 ng-bind="nomeApp" style="font-weight: bold ; text-align: center"></h1>
-        <form name="formSendmail" action="sendmail.php" method="POST">
+        <div class="container">
+        <h2 ng-bind="nomeApp" style="font-weight: bold ; text-align: center"></h2>
+        <form name="formSendmail" action="sendmail.php" method="POST" ng-submit="sendEmail()" novalidate>
             <fieldset class="border p-2">
                 <legend class="w-auto"><b>Dados de conexão com servidor de email</b></legend>
-                <div>
-                    <label for="host">Servidor SMTP:</label>
+                <!--HOST FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="host">Servidor SMTP:</label><!--
+                        --><span class="alert-danger erro-item" ng-if="formSendmail.host.$touched && formSendmail.host.$invalid"><!--
+                            --><span ng-if="formSendmail.host.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                        --></span>
                     <input class="form-control" type="text" id="host" name="host" ng-model="sendmail.host" required/>
                 </div>
-                <div>
-                    <label for="porta">Porta:</label>
-                    <input class="form-control" type="text" id="porta" name="porta" ng-model="sendmail.porta" required/>
+                <!--PORT FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="porta">Porta:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.port.$touched && formSendmail.port.$invalid"><!--
+                        --><span ng-if="formSendmail.port.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                    --></span>
+                    <input class="form-control" type="text" id="port" name="port" ng-model="sendmail.port" required/>
                 </div>
-                <div>
-                    <label for="usuario">Login:</label>
-                    <input class="form-control" type="text" id="usuario" name="usuario" ng-model="sendmail.usuario" required/>
+                <!--USER FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="usuario">Login:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.user.$touched && formSendmail.user.$invalid"><!--
+                        --><span ng-if="formSendmail.user.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                    --></span>
+                    <input class="form-control" type="text" id="user" name="user" ng-model="sendmail.user" required/>
                 </div>
-                <div>
-                    <label for="senha">Senha:</label>
-                    <input class="form-control" type="password" id="senha" name="senha" ng-model="sendmail.senha" required/>
+                <!--PASSWORD FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="senha">Senha:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.passwd.$touched && formSendmail.passwd.$invalid"><!--
+                        --><span ng-if="formSendmail.passwd.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                    --></span>
+                    <input class="form-control" type="password" id="passwd" name="passwd" ng-model="sendmail.passwd" required/>
                 </div>
             </fieldset>
             <fieldset class="border p-2">
                 <legend class="w-auto"><b>Dados da mensagem</b></legend>
                 <div></div>
-                <div>
-                    <label for="de">De:</label>
-                    <input class="form-control" type="email" id="de" name="de" ng-model="sendmail.de" required/>
+                <!--FROM FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="de">De:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.from.$touched && formSendmail.from.$invalid"><!--
+                        --><span ng-if="formSendmail.from.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                        --><span ng-if="formSendmail.from.$error.email">Por favor, entre com um endere&ccedil;o de email correto</span><!--
+                    --></span>
+                    <input class="form-control" type="email" id="from" name="from" ng-model="sendmail.from" required/>
                 </div>
-                <div>
-                    <label for="para">Para:</label>
-                    <input class="form-control" type="email" id="para" name="para" ng-model="sendmail.para" required/>
+                <!--TO FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="para">Para:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.to.$touched && formSendmail.to.$invalid"><!--
+                        --><span ng-if="formSendmail.to.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                        --><span ng-if="formSendmail.to.$error.email">Por favor, entre com um endere&ccedil;o de email correto</span><!--
+                    --></span>
+                    <input class="form-control" type="email" id="to" name="to" ng-model="sendmail.to" required/>
                 </div>
-                <div>
-                        <label for="cc">Cc:</label>
+                <!--CC FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="cc">Cc:</label><!--
+                        --><span class="alert-danger erro-item" ng-if="formSendmail.cc.$invalid"><!--
+                            --><span ng-if="formSendmail.cc.$error.email">Por favor, entre com um endere&ccedil;o de email correto</span><!--
+                        --></span>
                         <input class="form-control" type="email" id="cc" name="cc" ng-model="sendmail.cc"/>
                 </div>
-                <div>
-                        <label for="cco">Cco:</label>
+                <!--CCO FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="cco">Cco:</label><!--
+                        --><span class="alert-danger erro-item" ng-if="formSendmail.cco.$invalid"><!--
+                            --><span ng-if="formSendmail.cco.$error.email">Por favor, entre com um endere&ccedil;o de email correto</span><!--
+                        --></span>
                         <input class="form-control" type="email" id="cco" name="cco" ng-model="sendmail.cco"/>
                 </div>
-                <div>
-                    <label for="assunto">Assunto:</label>
-                    <input class="form-control" type="text" id="assunto" name="assunto" ng-model="sendmail.assunto" required/>
+                <!--SUBJECT FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="assunto">Assunto:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.subject.$touched && formSendmail.subject.$invalid"><!--
+                        --><span ng-if="formSendmail.subject.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                    --></span>
+                    <input class="form-control" type="text" id="subject" name="subject" ng-model="sendmail.subject" required/>
                 </div>
-                <div>
-                    <label for="texto">Mensagem:</label>
-                    <textarea class="form-control" id="texto" name="texto" ng-model="sendmail.texto" required></textarea>
+                <!--TEXT FIELD-->
+                <div class="label-error">
+                    <label class="label-item" for="texto">Mensagem:</label><!--
+                    --><span class="alert-danger erro-item" ng-if="formSendmail.text.$touched && formSendmail.text.$invalid"><!--
+                        --><span ng-if="formSendmail.text.$error.required">Este campo &eacute; obrigat&oacute;rio</span><!--
+                    --></span>
+                    <textarea class="form-control" id="text" name="text" ng-model="sendmail.text" required></textarea>
                 </div>
             </fieldset>
             <div></div>
+            <!--BUTTONS-->
             <div class="btn btn-block">
-                <button class="btn btn-primary" type="submit">Enviar</button>
+                <button class="btn btn-primary" type="submit" ng-disabled="formSendmail.$invalid">Enviar</button>
                 <button class="btn btn-danger" type="reset" ng-click="resetForm()">Limpar</button>
             </div>
         </form>
         </div>
     </div>
-    {{sendmail}}
-
 </body>
-<script src="lib/angular/angular.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+
 <script>
     angular.module("sendmail", []).controller("sendmailCtrl", function($scope){
         $scope.nomeApp = "Cliente SMTP";
+        $scope.submitted = false;
+
+        $scope.sendEmail = function(){
+            // Salva os dados de conexao com servidor SMTP no browser do usuario
+            console.log("Save localstorage...")
+            writeLocalStorage('host', $scope.sendmail.host);
+            writeLocalStorage('port', $scope.sendmail.port);
+            writeLocalStorage('user', $scope.sendmail.user);
+            writeLocalStorage('passwd', $scope.sendmail.passwd);
+            console.log("Finished!")
+        }
 
         $scope.resetForm = function (){
             $scope.formSendmail.$setPristine();
             $scope.formSendmail.$setUntouched();
             $scope.sendmail = {};
         }
+
         function localStorageAvailable(){
             return (typeof localStorage !== 'undefined');
         }
 
+        function writeLocalStorage(key, value){
+            if (localStorageAvailable()){
+                localStorage.setItem(key, value);
+            }
+        }        
         function readLocalStorage(){
             if (localStorageAvailable()){
                 console.log("Read localstorage...")
                 $scope.sendmail = {};
                 $scope.sendmail.host = localStorage.getItem("host");
-                $scope.sendmail.porta = localStorage.getItem("porta");
-                $scope.sendmail.usuario = localStorage.getItem("usuario");
-                $scope.sendmail.senha = localStorage.getItem("senha");
+                $scope.sendmail.port = localStorage.getItem("port");
+                $scope.sendmail.user = localStorage.getItem("user");
+                $scope.sendmail.passwd = localStorage.getItem("passwd");
                 console.log($scope.sendmail);
                 console.log("Finished!")
             }

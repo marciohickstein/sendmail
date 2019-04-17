@@ -1,7 +1,23 @@
 
-input.ng-touched.ng-invalid {
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
     border:1px solid red;
     -webkit-box-shadow:0 0 6px red;
     -moz-box-shadow:0 0 5px red;
     box-shadow:0 0 5px red;    
 }
+
+.label-error{
+    text-align: left;
+}
+
+.label-item{
+    display: inline-block;
+    width: 20%;
+}
+
+.erro-item{
+    display: inline-block;
+    width: 80%;
+    text-align: center;
+}
+
